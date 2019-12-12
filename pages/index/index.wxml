@@ -1,0 +1,42 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view> -->
+  <view class="bg">
+    <image src="../../assets/images/background/weather.jpeg"></image>
+  </view>
+  <view class="page">
+    <view class="page__bd">
+      <view class="weui-tabbar">
+        <view class="weui-tabbar__item weui-bar__item_on" bindtap="bindViewTap">
+          <view style="position: relative;display:inline-block;">
+            <image src="../../assets/images/icons/home.png" class="weui-tabbar__icon"></image>
+          </view>
+          <view class="weui-tabbar__label">Home</view>
+        </view>
+        <view class="weui-tabbar__item" bindtap="bindViewTap">
+          <view style="position: relative;display:inline-block;">
+            <image src="../../assets/images/icons/cate.png" class="weui-tabbar__icon"></image>
+            <view class="weui-badge weui-badge_dot" style="position:absolute;top:-2px;left:calc(100% - 3px);"></view>
+          </view>
+          <view class="weui-tabbar__label">标题</view>
+        </view>
+        <view class="weui-tabbar__item" bindtap="bindViewTap">
+          <view style="position: relative;display:inline-block;">
+            <image src="../../assets/images/icons/my.png" class="weui-tabbar__icon"></image>
+            <view class="weui-badge weui-badge_dot" style="position:absolute;top:-2px;left:calc(100% - 3px);"></view>
+          </view>
+          <view class="weui-tabbar__label">标题</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
