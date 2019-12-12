@@ -1,19 +1,61 @@
 <!--index.wxml-->
 <view class="container">
-  <!-- <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> -->
   <view class="bg">
     <image src="../../assets/images/background/weather.jpeg"></image>
   </view>
-  <view class="page">
+  <view class="wrapper">
+    <view decode='true' class="temp-box">
+      <view class="weui-flex">
+        <view class="weui-flex__item">
+          <text class="temp-text d-block" bindtap="reloadWeather">{{cityData.now.tmp || '-'}}℃</text>
+        </view>
+        <view class="weui-flex__item">
+          <view style="text-align:left;padding: 20rpx;margin-top: 30rpx;">
+            <view class='city'>
+              <view class='name' bindtap='toCitychoose'>
+                <image wx:if='{{located}}' class='icon' src='/img/location_s_w.png'></image>
+                <view class='val'>{{cityData.basic.location || '定位中'}}</view>
+              </view>
+            </view>
+            <view class='message'>{{message}}</view>
+
+            <view class='weather'>{{cityData.now.cond_txt || '--'}}</view>
+            <view class='pm'>
+              <text>能见度 {{cityData.now.vis}}</text>
+            </view>
+          </view>
+
+        </view>
+      </view>
+      <view class="info">
+
+      </view>
+      <text class='time d-block' wx:if='{{cityData.updateTimeFormat}}'>{{cityData.updateTimeFormat}} 更新</text>
+      <text class="slogan d-block">期待下一秒与你相遇</text>
+    </view>
+
+    <!-- <view class='guide' wx:if='{{cityData.daily_forecast}}'>
+      <view class='title'>7 天预报</view>
+      <view class='guides'>
+        <view class='item' wx:for='{{cityDatas.daily_forecast}}' wx:key='{{index}}'>
+          <view class='date i'>{{item.date}}</view>
+          <view class='temperature i'>{{item.tmp_max}}~{{item.tmp_min}}℃</view>
+          <view class='weather i'>
+            <text>{{item.cond_txt_d}}</text>
+            <image mode='widthFix' src='{{weatherIconUrl}}{{item.cond_code_d}}.png'></image>
+          </view>
+          <view class='wind i'>{{item.wind_dir}}{{item.wind_sc}}级</view>
+        </view>
+      </view>
+    </view>
+    <view class='details'>
+      <view class='detail' wx:for='{{detailsDic.key}}' wx:key='{{index}}'>
+        <view>{{detailsDic.val[item]}}</view>
+        <view>{{cityDatas.now[item]}}</view>
+      </view>
+    </view> -->
+  </view>
+  <!-- <view class="page">
     <view class="page__bd">
       <view class="weui-tabbar">
         <view class="weui-tabbar__item weui-bar__item_on" bindtap="bindViewTap">
@@ -38,5 +80,5 @@
         </view>
       </view>
     </view>
-  </view>
+  </view> -->
 </view>

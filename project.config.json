@@ -4,13 +4,16 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
+		"enhance": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
 		"autoAudits": true,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -22,7 +25,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.9.0",
-	"appid": "wx0ac93950cb98d1f5",
+	"appid": "wx7042fa05767b7227",
 	"projectname": "TM",
 	"debugOptions": {
 		"hidedInDevtools": []

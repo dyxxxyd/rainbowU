@@ -2,7 +2,7 @@
 //获取应用实例
 const app = getApp()
 const key = app.globalData.key
-let weather = require('../../data/weather.js');
+let utils = require('../../utils/util');
 
 Page({
   data: {
@@ -16,79 +16,83 @@ Page({
   },
   //事件处理函数
   bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  getWeather: function (location) {
-    let resp = weather.weather;
-    let data = resp[0]['HeWeather6'][0];
-    if (data.status === 'ok') {
-      this.setData({
-        cityData: data,
-      });
-    } else {
-      wx.showToast({
-        title: '查询失败',
-        icon: 'none',
-      });
-    }
-
-
-    // wx.request({
-    //   url: `${app.globalData.requestUrl.weather}`,
-    //   data: {
-    //     location,
-    //     key
-    //   },
-    //   success: (resp) => {
-    //     if (resp.statusCode === 200) {
-    //       let data = resp.data.HeWeather6[0];
-    //       if (data.status === 'ok') {
-    //         this.success(data, location);
-    //       } else {
-    //         wx.showToast({
-    //           title: '查询失败',
-    //           icon: 'none',
-    //         });
-    //       }
-    //     }
-    //   },
-    //   fail: () => {
-    //     wx.showToast({
-    //       title: '查询失败',
-    //       icon: 'none',
-    //     });
-    //   }
+    // wx.navigateTo({
+    //   url: '../logs/logs'
     // })
   },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
+  success(data, location) {
+    wx.stopPullDownRefresh();
+    let now = new Date();
+    // 存下来源数据
+    data.updateTime = now.getTime();
+    data.updateTimeFormat = utils.formatDate(now, "MM-dd hh:mm");
+    wx.setStorage({
+      key: 'cityData',
+      data,
+    });
+    this.setData({
+      cityData: data,
+    });
+  },
+  fail(res) {
+    wx.stopPullDownRefresh()
+    let errMsg = res.errMsg || ''
+    // 拒绝授权地理位置权限
+    if (errMsg.indexOf('deny') !== -1 || errMsg.indexOf('denied') !== -1) {
+      wx.showToast({
+        title: '需要开启地理位置权限',
+        icon: 'none',
+        duration: 2500,
+        success: (res) => {
+          if (this.canUseOpenSettingApi()) {
+            let timer = setTimeout(() => {
+              clearTimeout(timer)
+              wx.openSetting({})
+            }, 2500)
+          } else {
+            this.setData({
+              openSettingButtonShow: true,
+            })
+          }
+        },
       })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
     } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
+      wx.showToast({
+        title: '网络不给力，请稍后再试',
+        icon: 'none',
       })
     }
+  },
+  getWeather: function (location) {
+    let _this = this;
+    wx.request({
+      url: `${app.globalData.requestUrl.weather}`,
+      data: {
+        location,
+        key
+      },
+      success: (resp) => {
+        if (resp.statusCode === 200) {
+          let data = resp.data.HeWeather6[0];
+          if (data.status === 'ok') {
+            this.success(data, location);
+          } else {
+            wx.showToast({
+              title: '查询失败',
+              icon: 'none',
+            });
+          }
+        }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '查询失败',
+          icon: 'none',
+        });
+      }
+    })
+  },
+  onLoad: function () {
     let _this = this
     wx.getLocation({
       success: function (res) {
@@ -99,10 +103,8 @@ Page({
         this.fail(res);
       }
     });
-    console.log(this.cityData);
   },
   getUserInfo: function (e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -150,28 +152,24 @@ Page({
     })
   },
 
-  // reloadPage() {
-  //   // this.setBcgImg()
-  //   // this.getCityDatas()
-  //   // this.reloadInitSetting()
-  //   this.reloadWeather();
-  //   // this.reloadGetBroadcast()
-  // },
-
-  // init(params, callback) {
-  //   wx.getLocation({
-  //     success: function (res) {
-  //       this.getWeather(`${res.latitude},${res.longitude}`);
-  //       console.log(res);
-  //       // this.getHourly(`${res.latitude},${res.longitude}`);
-  //       callback && callback();
-  //     },
-  //     fail: (res) => {
-  //       this.fail(res);
-  //     }
-  //   });
-  // },
-  // reloadWeather() {
-  //   this.init({});
-  // },
+  reloadPage() {
+    // this.setBcgImg()
+    // this.getCityDatas()
+    // this.reloadInitSetting()
+    this.reloadWeather();
+    // this.reloadGetBroadcast()
+  },
+  reloadWeather: function () {
+    console.log('reload');
+    let _this = this
+    wx.getLocation({
+      success: function (res) {
+        _this.getWeather(`${res.latitude},${res.longitude}`);
+        // this.getHourly(`${res.latitude},${res.longitude}`);
+      },
+      fail: (res) => {
+        this.fail(res);
+      }
+    });
+  },
 });
