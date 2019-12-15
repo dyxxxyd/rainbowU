@@ -72,6 +72,7 @@ Page({
         key
       },
       success: (resp) => {
+        console.log(resp);
         if (resp.statusCode === 200) {
           let data = resp.data.HeWeather6[0];
           if (data.status === 'ok') {

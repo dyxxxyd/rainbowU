@@ -1,40 +1,25 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="bg">
-    <image src="../../assets/images/background/weather.jpeg"></image>
-  </view>
-  <view class="wrapper">
-    <view decode='true' class="temp-box">
-      <view class="weui-flex">
-        <view class="weui-flex__item">
-          <text class="temp-text d-block" bindtap="reloadWeather">{{cityData.now.tmp || '-'}}℃</text>
-        </view>
-        <view class="weui-flex__item">
-          <view style="text-align:left;padding: 20rpx;margin-top: 30rpx;">
-            <view class='city'>
-              <view class='name' bindtap='toCitychoose'>
-                <image wx:if='{{located}}' class='icon' src='/img/location_s_w.png'></image>
-                <view class='val'>{{cityData.basic.location || '定位中'}}</view>
-              </view>
-            </view>
-            <view class='message'>{{message}}</view>
-
-            <view class='weather'>{{cityData.now.cond_txt || '--'}}</view>
-            <view class='pm'>
-              <text>能见度 {{cityData.now.vis}}</text>
-            </view>
-          </view>
-
-        </view>
-      </view>
-      <view class="info">
-
-      </view>
-      <text class='time d-block' wx:if='{{cityData.updateTimeFormat}}'>{{cityData.updateTimeFormat}} 更新</text>
-      <text class="slogan d-block">期待下一秒与你相遇</text>
+  <view class="box">
+    <view class="city">
+      <view bindtap="reloadWeather">{{cityData.basic.location || '定位中'}}</view>
     </view>
+    <view class="weather">
+      <view class='weather'>{{cityData.now.cond_txt || '--'}}</view>
+    </view>
+    <view class="wrapper">
+      <view class="weather-icon">
+        <image src="../../assets/images/weather/Cloudy-Day.png"></image>
+      </view>
+      <view class="temp-box">{{cityData.now.tmp || '-'}}℃</view>
+      <view>
+        <text class='time d-block' wx:if='{{cityData.updateTimeFormat}}'>
+      {{cityData.updateTimeFormat}} 更新
+      </text>
+        <text class="slogan d-block">期待下一秒与你相遇</text>
+      </view>
 
-    <!-- <view class='guide' wx:if='{{cityData.daily_forecast}}'>
+      <!-- <view class='guide' wx:if='{{cityData.daily_forecast}}'>
       <view class='title'>7 天预报</view>
       <view class='guides'>
         <view class='item' wx:for='{{cityDatas.daily_forecast}}' wx:key='{{index}}'>
@@ -54,7 +39,29 @@
         <view>{{cityDatas.now[item]}}</view>
       </view>
     </view> -->
+    </view>
   </view>
+  <view class="box2">
+    <view class="days">
+      <view class="forecast">
+        <scroll-view scroll-x="true" :scroll-into-view="toView">
+          <view class="item" wx:for="{{cityData.daily_forecast}}" wx:key="{{index}}">
+            <view class="cond-text">{{item.cond_txt_n}}</view>
+            <view>{{item.tmp_min}}/{{item.tmp_max}}℃</view>
+            <view class='date i'>{{item.date}}</view>
+          </view>
+        </scroll-view>
+      </view>
+
+
+      <view class="tool">
+        <view class="tool-left">
+          forecast
+        </view>
+      </view>
+    </view>
+  </view>
+
   <!-- <view class="page">
     <view class="page__bd">
       <view class="weui-tabbar">
