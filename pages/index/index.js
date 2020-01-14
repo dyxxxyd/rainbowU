@@ -10,7 +10,8 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     message: '',
     cityData: {},
-    hourlyData: {}
+    hourlyData: {},
+    weatherTxtMap: app.globalData.weatherTxtMap
   },
   //事件处理函数
   bindViewTap: function () {
@@ -72,7 +73,6 @@ Page({
         key
       },
       success: (resp) => {
-        console.log(resp);
         if (resp.statusCode === 200) {
           let data = resp.data.HeWeather6[0];
           if (data.status === 'ok') {
@@ -104,7 +104,6 @@ Page({
         key,
       },
       success: (res) => {
-        console.log(res);
         if (res.statusCode === 200) {
           let data = res.data.HeWeather6[0]
           if (data.status === 'ok') {
@@ -165,7 +164,6 @@ Page({
     // this.reloadGetBroadcast()
   },
   reloadWeather: function () {
-    console.log('reload');
     let _this = this
     wx.getLocation({
       success: function (res) {

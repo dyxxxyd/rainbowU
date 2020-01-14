@@ -61,12 +61,15 @@
   margin-right: 30rpx;
 }
 
-.wrapper-predict .days-item {
-  height: 250rpx;
+.wrapper-predict .days-items {
+  height: 320rpx;
   border-top-left-radius: 50rpx;
   border-bottom-left-radius: 50rpx;
   background: #75a1ff;
   margin: 35rpx 0;
+  width: 100vw;
+  overflow: hidden;
+  box-shadow: 0 1rpx 5rpx 0 #75a1ff;
 }
 
 .wrapper .temp-box {
@@ -77,65 +80,35 @@
   color: #0303d3;
 }
 
-.days {
-  background: #0303d3;
-  width: 100vw;
-  height: 100%;
-  margin-top: 20rpx;
-  border-radius: 50rpx;
+.days-items .days-item {
+  background:#3e76f0;
+  width: 90rpx;
+  height: 220rpx;
+  display: inline-block;
+  margin: 55rpx 0 0 30rpx;
+  border-radius: 45rpx;
+  white-space: nowrap;
+  text-align: center;
+}
+.days-items .days-item:first-child {
+  margin-left: 50rpx;
 }
 
-.days .forecast {
-  /* width: 100vw; */
-  overflow: scroll-x;
-
-}
-
-scroll-view {
-    /* display: flex; */
-    flex-wrap: nowrap;
-    width: 100%;
-}
-.item {
-  display: inline-blocl;
-    /* display: flex; */
-    /* justify-content: center; */
-    width: 25%;
-    color: #fff;
-}
-
-.days .forecast .item {
+.days-item_text {
+  font-size: 22rpx;
+  margin-top: 35rpx;
   display: inline-block;
 }
 
-.days .tool {
-  width: 96%;
-  height: 100rpx;
-  background: #fff;
-  margin: 0 15rpx;
-  border-radius: 50rpx;
-  position: absolute;
-  bottom: 0;
+.days-item_icon {
+  width: 90rpx;
+  height: 70rpx;
+  text-align: center;
 }
-
-.days .tool .tool-left {
-  background: #e4e2fd;
-  width: 250rpx;
-  height: 75rpx;
-  border-radius: 50rpx;
-  margin-left: 15rpx;
-  padding-top: 10rpx;
-  padding-left: 30rpx;
-  line-height: 2.4;
-  top: 8rpx;
-  position: absolute;
+.days-item_icon image {
+  width: 70%;
+  height: 90%;
 }
-
-.d-block {
-  display: block;
-}
-
-.wrapper .temp-text {
-  font-size: 150rpx;
-  text-align: right;
+.days-item_temp {
+  font-size: 22rpx;
 }

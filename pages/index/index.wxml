@@ -1,3 +1,4 @@
+<wxs module="utils" src="./index.wxs"></wxs>
 <!--index.wxml-->
 <view class="container" style="padding-top: {{isIPX ? 88 : 64}}px">
   <view class="box">
@@ -8,7 +9,7 @@
     <view class="weather" bindtap="reloadWeather">
       <view class="weui-flex weather-info">
             <view class="weui-flex__item weather-icon">
-              <image src="../../assets/images/weather/tianqi-qing.png"></image>
+              <image src="../../assets/images/weather/tianqi-{{weatherTxtMap[cityData.now.cond_code]}}.png" wx:if='weatherTxtMap[cityData.now.cond_code]'></image>
             </view>
             <view class="weui-flex__item weather-temp">
             {{cityData.now.tmp || '-'}}℃
@@ -22,76 +23,15 @@
         <text>Tomorrow</text>
         <text>Next 7 days -></text>
       </view>
-      <view class="days-item">
-      
-      </view>
-      <!-- <view class='guide' wx:if='{{cityData.daily_forecast}}'>
-      <view class='title'>7 天预报</view>
-      <view class='guides'>
-        <view class='item' wx:for='{{cityDatas.daily_forecast}}' wx:key='{{index}}'>
-          <view class='date i'>{{item.date}}</view>
-          <view class='temperature i'>{{item.tmp_max}}~{{item.tmp_min}}℃</view>
-          <view class='weather i'>
-            <text>{{item.cond_txt_d}}</text>
-            <image mode='widthFix' src='{{weatherIconUrl}}{{item.cond_code_d}}.png'></image>
+      <view class="days-items">
+        <view class="days-item" wx:if='{{cityData.hourly}}' wx:for='{{cityData.hourly}}' wx:key='{{index}}'>
+          <text class="days-item_text">{{utils.dateFormat(item.time, 'd/:h') || '-'}}</text>
+          <view class="days-item_icon">
+          <image src="../../assets/images/weather/tianqi-{{weatherTxtMap[item.cond_code]}}.png" wx:if='{{weatherTxtMap[item.cond_code]}}'></image>
           </view>
-          <view class='wind i'>{{item.wind_dir}}{{item.wind_sc}}级</view>
+          <text class="days-item_temp">{{item.tmp || '-'}}℃</text>
         </view>
       </view>
-    </view>
-    <view class='details'>
-      <view class='detail' wx:for='{{detailsDic.key}}' wx:key='{{index}}'>
-        <view>{{detailsDic.val[item]}}</view>
-        <view>{{cityDatas.now[item]}}</view>
-      </view>
-    </view> -->
     </view>
   </view>
-  <!-- <view class="box2">
-    <view class="days">
-      <view class="forecast">
-        <scroll-view scroll-x="true" :scroll-into-view="toView">
-          <view class="item" wx:for="{{cityData.daily_forecast}}" wx:key="{{index}}">
-            <view class="cond-text">{{item.cond_txt_n}}</view>
-            <view>{{item.tmp_min}}/{{item.tmp_max}}℃</view>
-            <view class='date i'>{{item.date}}</view>
-          </view>
-        </scroll-view>
-      </view>
-
-
-      <view class="tool">
-        <view class="tool-left">
-          forecast
-        </view>
-      </view>
-    </view>
-  </view> -->
-
-  <!-- <view class="page">
-    <view class="page__bd">
-      <view class="weui-tabbar">
-        <view class="weui-tabbar__item weui-bar__item_on" bindtap="bindViewTap">
-          <view style="position: relative;display:inline-block;">
-            <image src="../../assets/images/icons/home.png" class="weui-tabbar__icon"></image>
-          </view>
-          <view class="weui-tabbar__label">Home</view>
-        </view>
-        <view class="weui-tabbar__item" bindtap="bindViewTap">
-          <view style="position: relative;display:inline-block;">
-            <image src="../../assets/images/icons/cate.png" class="weui-tabbar__icon"></image>
-            <view class="weui-badge weui-badge_dot" style="position:absolute;top:-2px;left:calc(100% - 3px);"></view>
-          </view>
-          <view class="weui-tabbar__label">标题</view>
-        </view>
-        <view class="weui-tabbar__item" bindtap="bindViewTap">
-          <view style="position: relative;display:inline-block;">
-            <image src="../../assets/images/icons/my.png" class="weui-tabbar__icon"></image>
-            <view class="weui-badge weui-badge_dot" style="position:absolute;top:-2px;left:calc(100% - 3px);"></view>
-          </view>
-          <view class="weui-tabbar__label">标题</view>
-        </view>
-      </view>
-    </view>
-  </view> -->
 </view>
