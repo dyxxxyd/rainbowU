@@ -3,6 +3,8 @@
 .container {
   color: #fff;
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
   background: -webkit-linear-gradient(bottom, rgb(117, 160, 251) 0%, rgb(50, 109, 239) 100%);
   background: -o-linear-gradient(bottom, rgb(117, 160, 251) 0%, rgb(50, 109, 239) 100%);
   background: -ms-linear-gradient(bottom, rgb(117, 160, 251) 0%, rgb(50, 109, 239) 100%);

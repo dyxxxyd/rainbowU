@@ -25,7 +25,7 @@
       </view>
       <view class="days-items">
         <view class="days-item" wx:if='{{cityData.hourly}}' wx:for='{{cityData.hourly}}' wx:key='{{index}}'>
-          <text class="days-item_text">{{utils.dateFormat(item.time, 'd/:h') || '-'}}</text>
+          <text class="days-item_text">{{utils.dateFormat(item.time, 'd/h:') || '-'}}</text>
           <view class="days-item_icon">
           <image src="../../assets/images/weather/tianqi-{{weatherTxtMap[item.cond_code]}}.png" wx:if='{{weatherTxtMap[item.cond_code]}}'></image>
           </view>
