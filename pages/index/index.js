@@ -6,9 +6,7 @@ let utils = require('../../utils/util');
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
+    isIPX: app.globalData.isIPX,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     message: '',
     cityData: {},
@@ -20,6 +18,7 @@ Page({
     //   url: '../logs/logs'
     // })
   },
+
   success(data, location) {
     wx.stopPullDownRefresh();
     let now = new Date();
@@ -63,6 +62,7 @@ Page({
       })
     }
   },
+
   getWeather: function (location) {
     let _this = this;
     wx.request({
@@ -93,12 +93,42 @@ Page({
       }
     })
   },
+
+  // 获取小时天气
+  getHourly: function (location) {
+    let _this = this;
+    wx.request({
+      url: `${app.globalData.requestUrl.hourly}`,
+      data: {
+        location,
+        key,
+      },
+      success: (res) => {
+        console.log(res);
+        if (res.statusCode === 200) {
+          let data = res.data.HeWeather6[0]
+          if (data.status === 'ok') {
+            _this.setData({
+              hourlyData: data.hourly || []
+            })
+          }
+        }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '查询失败',
+          icon: 'none',
+        })
+      },
+    })
+  },
+
   onLoad: function () {
     let _this = this
     wx.getLocation({
       success: function (res) {
         _this.getWeather(`${res.latitude},${res.longitude}`);
-        // this.getHourly(`${res.latitude},${res.longitude}`);
+        _this.getHourly(`${res.latitude},${res.longitude}`);
       },
       fail: (res) => {
         this.fail(res);
@@ -110,33 +140,6 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
-    })
-  },
-
-  // 获取小时天气
-  getHourly(location) {
-    wx.request({
-      url: `${globalData.requestUrl.hourly}`,
-      data: {
-        location,
-        key,
-      },
-      success: (res) => {
-        if (res.statusCode === 200) {
-          let data = res.data.HeWeather6[0]
-          if (data.status === 'ok') {
-            this.setData({
-              hourlyDatas: data.hourly || []
-            })
-          }
-        }
-      },
-      fail: () => {
-        wx.showToast({
-          title: '查询失败',
-          icon: 'none',
-        })
-      },
     })
   },
   onPullDownRefresh(res) {
@@ -151,6 +154,7 @@ Page({
         })
       },
     })
+    console.log(this.cityDatas)
   },
 
   reloadPage() {

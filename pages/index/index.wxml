@@ -1,24 +1,30 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container" style="padding-top: {{isIPX ? 88 : 64}}px">
   <view class="box">
-    <view class="city">
-      <view bindtap="reloadWeather">{{cityData.basic.location || '定位中'}}</view>
+    <view class="location">
+      <view class="district">{{cityData.basic.location || '定位中'}}</view>
+      <view class="city">{{cityData.basic.parent_city}}</view>
     </view>
-    <view class="weather">
-      <view class='weather'>{{cityData.now.cond_txt || '--'}}</view>
+    <view class="weather" bindtap="reloadWeather">
+      <view class="weui-flex weather-info">
+            <view class="weui-flex__item weather-icon">
+              <image src="../../assets/images/weather/tianqi-qing.png"></image>
+            </view>
+            <view class="weui-flex__item weather-temp">
+            {{cityData.now.tmp || '-'}}℃
+            </view>
+        </view>
+      <view class='weather-text'>{{cityData.now.cond_txt || '--'}}</view>
     </view>
-    <view class="wrapper">
-      <view class="weather-icon">
-        <image src="../../assets/images/weather/Cloudy-Day.png"></image>
+    <view class="wrapper-predict">
+      <view class="days-label">
+        <text>Today</text>
+        <text>Tomorrow</text>
+        <text>Next 7 days -></text>
       </view>
-      <view class="temp-box">{{cityData.now.tmp || '-'}}℃</view>
-      <view>
-        <text class='time d-block' wx:if='{{cityData.updateTimeFormat}}'>
-      {{cityData.updateTimeFormat}} 更新
-      </text>
-        <text class="slogan d-block">期待下一秒与你相遇</text>
+      <view class="days-item">
+      
       </view>
-
       <!-- <view class='guide' wx:if='{{cityData.daily_forecast}}'>
       <view class='title'>7 天预报</view>
       <view class='guides'>
@@ -41,7 +47,7 @@
     </view> -->
     </view>
   </view>
-  <view class="box2">
+  <!-- <view class="box2">
     <view class="days">
       <view class="forecast">
         <scroll-view scroll-x="true" :scroll-into-view="toView">
@@ -60,7 +66,7 @@
         </view>
       </view>
     </view>
-  </view>
+  </view> -->
 
   <!-- <view class="page">
     <view class="page__bd">

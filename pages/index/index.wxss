@@ -1,27 +1,47 @@
 /**index.wxss**/
 
 .container {
-  color: #0303d3;
+  color: #fff;
+  height: 100vh;
+  background: -webkit-linear-gradient(bottom, rgb(117, 160, 251) 0%, rgb(50, 109, 239) 100%);
+  background: -o-linear-gradient(bottom, rgb(117, 160, 251) 0%, rgb(50, 109, 239) 100%);
+  background: -ms-linear-gradient(bottom, rgb(117, 160, 251) 0%, rgb(50, 109, 239) 100%);
+  background: -moz-linear-gradient(bottom, rgb(117, 160, 251) 0%, rgb(50, 109, 239) 100%);
+  background: linear-gradient(to top, rgb(117, 160, 251) 0%, rgb(50, 109, 239) 100%);
 }
 
 .box {
   width: 100vw;
-  height: 60vh;
-  text-align: center;
+  height: 55vh;
 }
 
 .box2 {
   width: 100vw;
-  height: 40vh;
+  height: 45vh;
 }
 
-.city {
-  font-size: 80rpx;
-  color: #0303d3;
+.location {
+  font-size: 50rpx;
+  margin: 0 60rpx;
+}
+.location .disctict {
+  font-size: 40rpx;
+  display: block;
 }
 
-.weather {
-  color: #aaa5f4;
+.weather{
+  margin: 150rpx 0;
+}
+.weather .weather-text {
+  font-size: 35rpx;
+  text-align: center;
+}
+.weather-info .weather-icon {
+  text-align: right;
+}
+.weather-info .weather-temp {
+  text-align: left;
+  font-size: 110rpx;
 }
 
 .weather-icon {
@@ -31,6 +51,22 @@
 .weather-icon image {
   width: 176rpx;
   height: 176rpx;
+}
+
+.wrapper-predict {
+  padding-left: 60rpx;
+}
+
+.wrapper-predict .days-label text {
+  margin-right: 30rpx;
+}
+
+.wrapper-predict .days-item {
+  height: 250rpx;
+  border-top-left-radius: 50rpx;
+  border-bottom-left-radius: 50rpx;
+  background: #75a1ff;
+  margin: 35rpx 0;
 }
 
 .wrapper .temp-box {

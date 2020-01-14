@@ -6,6 +6,8 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
+    var _this = this;
+
     // 登录
     wx.login({
       success: res => {
@@ -32,10 +34,17 @@ App({
         }
       }
     })
+    wx.getSystemInfo({
+      success: function (res) {
+        _this.globalData.isIPX = res.model.indexOf('iPhone X') > -1 || res.model.indexOf('iPhone 11') > -1;
+      }
+    })
   },
   globalData: {
     keepscreenon: false,
     systeminfo: {},
+    isIPX: false,
+    height: 0,
     key: '04e28e74a3394e928d84e16104c77ac1',
     requestUrl: {
       weather: 'https://free-api.heweather.com/s6/weather',
