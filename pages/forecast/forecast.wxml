@@ -1,0 +1,15 @@
+<!--pages/forecast.wxml-->
+<view class="container" style="padding-top: {{isIPX ? 78 : 64}}px">
+  <text class="title">七日天气</text>
+  <view class="weui-flex forecast-items" wx:for='{{cityData.daily_forecast}}' wx:key='index'>
+    <view class="weui-flex__item">
+      <text>{{item.date}}</text>
+    </view>
+    <view class="forecast-items_icon">
+      <image src="../../assets/images/weather/tianqi-{{weatherTxtMap[item.cond_code_d]}}.png" wx:if='{{weatherTxtMap[item.cond_code_d]}}'></image>
+    </view>
+    <view class="forecast-items_text">
+      {{item.tmp_min || '-'}}~{{item.tmp_max || '-'}}℃
+    </view>
+  </view>
+</view>

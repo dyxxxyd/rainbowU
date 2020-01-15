@@ -1,0 +1,38 @@
+/* pages/forecast.wxss */
+
+.container {
+  padding-left: 60rpx;
+  padding-right: 140rpx;
+}
+
+.title {
+  height: 50rpx;
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+  font-size: 48rpx;
+  margin-bottom: 15rpx;
+}
+
+.forecast-items {
+  height: 120rpx;
+  width: 100%;
+  margin: 25rpx 0;
+  align-items: center;
+}
+
+.forecast-items_icon, .forecast-items_text {
+  width: 120rpx;
+  height: 100%;
+}
+
+.forecast-items_icon image {
+  width: 70%;
+  height: 70%;
+  margin-top: 20rpx;
+}
+
+.forecast-items_text {
+  text-align: center;
+  line-height: 4;
+}

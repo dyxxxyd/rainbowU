@@ -17,11 +17,11 @@
         </view>
       <view class='weather-text'>{{cityData.now.cond_txt || '--'}}</view>
     </view>
-    <view class="wrapper-predict">
+    <view class="wrapper-predict" style="margin-top: {{isIPX ? 350 : 20}}rpx">
       <view class="days-label">
-        <text>Today</text>
-        <text>Tomorrow</text>
-        <text>Next 7 days -></text>
+        <text>24小时天气</text>
+        <!-- <text>Tomorrow</text> -->
+        <text bindtap="next7Days">七日天气 -></text>
       </view>
       <view class="days-items">
         <view class="days-item" wx:if='{{cityData.hourly}}' wx:for='{{cityData.hourly}}' wx:key='{{index}}'>

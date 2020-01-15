@@ -1,5 +1,3 @@
-//index.js
-//获取应用实例
 const app = getApp()
 const key = app.globalData.key
 let utils = require('../../utils/util');
@@ -7,17 +5,11 @@ let utils = require('../../utils/util');
 Page({
   data: {
     isIPX: app.globalData.isIPX,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    message: '',
     cityData: {},
-    hourlyData: {},
     weatherTxtMap: app.globalData.weatherTxtMap
   },
   //事件处理函数
   bindViewTap: function () {
-    // wx.navigateTo({
-    //   url: '../forecast/forecast'
-    // })
   },
 
   success(data, location) {
@@ -94,90 +86,32 @@ Page({
     })
   },
 
-  // 获取小时天气
-  getHourly: function (location) {
-    let _this = this;
-    wx.request({
-      url: `${app.globalData.requestUrl.hourly}`,
-      data: {
-        location,
-        key,
-      },
-      success: (res) => {
-        if (res.statusCode === 200) {
-          let data = res.data.HeWeather6[0]
-          if (data.status === 'ok') {
-            _this.setData({
-              hourlyData: data.hourly || []
-            })
-          }
-        }
-      },
-      fail: () => {
-        wx.showToast({
-          title: '查询失败',
-          icon: 'none',
-        })
-      },
-    })
-  },
-
   onLoad: function () {
-    let _this = this
-    wx.getLocation({
-      success: function (res) {
-        _this.getWeather(`${res.latitude},${res.longitude}`);
-        _this.getHourly(`${res.latitude},${res.longitude}`);
-      },
-      fail: (res) => {
-        this.fail(res);
-      }
-    });
+    this.getCityDatas();
   },
-  getUserInfo: function (e) {
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
-  onPullDownRefresh(res) {
-    this.reloadPage();
-  },
+  
   getCityDatas() {
-    let cityDatas = wx.getStorage({
-      key: 'cityDatas',
+    let _this = this;
+    let cityData = wx.getStorage({
+      key: 'cityData',
       success: (res) => {
         this.setData({
-          cityDatas: res.data,
+          cityData: res.data,
         })
       },
+      fail: () => {
+        wx.getLocation({
+          success: function (res) {
+            _this.getWeather(`${res.latitude},${res.longitude}`);
+          },
+          fail: (res) => {
+            this.fail(res);
+          }
+        });
+      }
     })
-    console.log(this.cityDatas)
   },
 
   reloadPage() {
-    // this.setBcgImg()
-    // this.getCityDatas()
-    // this.reloadInitSetting()
-    this.reloadWeather();
-    // this.reloadGetBroadcast()
-  },
-  reloadWeather: function () {
-    let _this = this
-    wx.getLocation({
-      success: function (res) {
-        _this.getWeather(`${res.latitude},${res.longitude}`);
-        // this.getHourly(`${res.latitude},${res.longitude}`);
-      },
-      fail: (res) => {
-        this.fail(res);
-      }
-    });
-  },
-  next7Days: function () {
-    wx.navigateTo({
-      url: '../forecast/forecast'
-    })
   },
 });
